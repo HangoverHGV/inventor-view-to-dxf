@@ -10,14 +10,14 @@ using ViewOptionsFormNamespace; // Replace with the actual namespace containing 
 namespace InventorDXFExport
 {
     // Replace these GUIDs with your own for production.
-    [Guid("D5AAFB69-0EC4-44CE-89B2-C089F0492425")]
+    [Guid("45B07B4F-300D-47C2-9844-48601C2E608A")]
     [ProgId("DXFExport.AddInServer")]
     [ComVisible(true)]
     public class AddInServer : ApplicationAddInServer
     {
         private Inventor.Application _invApp;
         private ButtonDefinition _btnExport;
-        private const string clientId = "{D5AAFB69-0EC4-44CE-89B2-C089F0492425}";
+        private const string clientId = "{45B07B4F-300D-47C2-9844-48601C2E608A}";
 
         public void Activate(ApplicationAddInSite addInSiteObject, bool firstTime)
         {

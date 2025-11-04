@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DXFExport")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+56acabe2febb3afe5df87ce4ba06149291d9ef64")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+61b5ed572f686a97f078372b80f50b717da2167b")]
 [assembly: System.Reflection.AssemblyProductAttribute("DXFExport")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DXFExport")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
