@@ -4,7 +4,9 @@ using System.IO;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using Inventor;
-using ViewOptionsFormNamespace; // Replace with the actual namespace containing ViewOptionsForm
+using ViewOptionsFormNamespace;
+using Path = System.IO.Path;
+using Environment = System.Environment; // Replace with the actual namespace containing ViewOptionsForm
 
 
 namespace InventorDXFExport
@@ -114,13 +116,23 @@ namespace InventorDXFExport
                 try { sheet.TitleBlock?.Delete(); } catch { }
                 try { sheet.Border?.Delete(); } catch { }
 
-                // Show the WinForms dialog to get orientation, style and scale from the user
+                // Determine sensible default file name (part name without extension)
+                string defaultName;
+                if (!string.IsNullOrEmpty(partDoc.FullFileName))
+                    defaultName = Path.GetFileNameWithoutExtension(partDoc.FullFileName);
+                else
+                    defaultName = Path.GetFileNameWithoutExtension(partDoc.DisplayName ?? "Export");
+
+                // Show the WinForms dialog to get orientation, style, scale and filename from the user
                 ViewOrientationTypeEnum orientation;
                 DrawingViewStyleEnum viewStyle;
                 double scale;
+                string chosenFileName;
 
-                using (var dlg = new ViewOptionsFormNamespace.ViewOptionsForm())
+                // Pass the computed defaultName into the dialog so the save dialog shows the part name by default
+                using (var dlg = new ViewOptionsFormNamespace.ViewOptionsForm(defaultName))
                 {
+                    dlg.Text = $"Export: {defaultName}";
                     if (dlg.ShowDialog() != System.Windows.Forms.DialogResult.OK)
                     {
                         // User cancelled — clean up by closing the drawing (without saving)
@@ -131,7 +143,14 @@ namespace InventorDXFExport
                     orientation = dlg.SelectedOrientation;
                     viewStyle = dlg.SelectedViewStyle;
                     scale = dlg.Scale;
+                    chosenFileName = dlg.Text;
                 }
+
+                // sanitize chosen file name and fallback to default if empty
+                if (string.IsNullOrWhiteSpace(chosenFileName))
+                    chosenFileName = defaultName;
+                foreach (var c in Path.GetInvalidFileNameChars())
+                    chosenFileName = chosenFileName.Replace(c, '_');
 
                 var tg = invApp.TransientGeometry;
                 var insertPt = tg.CreatePoint2d(10, 10);
@@ -154,17 +173,19 @@ namespace InventorDXFExport
 
                 string dxfPath;
                 if (!string.IsNullOrEmpty(partDoc.FullFileName))
-                    dxfPath = System.IO.Path.ChangeExtension(partDoc.FullFileName, ".dxf");
+                {
+                    var dir = Path.GetDirectoryName(partDoc.FullFileName) ?? Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                    dxfPath = Path.Combine(dir, chosenFileName + ".dxf");
+                }
                 else
                 {
-                    var baseName = System.IO.Path.GetFileNameWithoutExtension(drawingDoc.DisplayName ?? "Export");
-                    dxfPath = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop), baseName + ".dxf");
+                    dxfPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), chosenFileName + ".dxf");
                 }
 
                 try
                 {
                     drawingDoc.SaveAs(dxfPath, true);
-                    System.Windows.Forms.MessageBox.Show("Saved drawing as DXF:\n" + dxfPath, "ViewToDXF", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
+                    MessageBox.Show("Saved drawing as DXF:\n" + dxfPath, "ViewToDXF", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (COMException saveEx)
                 {
