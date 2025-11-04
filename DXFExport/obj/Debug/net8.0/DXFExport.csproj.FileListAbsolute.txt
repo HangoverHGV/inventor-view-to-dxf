@@ -1,0 +1,6 @@
+E:\C#\Inventor\inventor-view-to-dxf\DXFExport\obj\Debug\net8.0\DXFExport.csproj.AssemblyReference.cache
+E:\C#\Inventor\inventor-view-to-dxf\DXFExport\obj\Debug\net8.0\DXFExport.GeneratedMSBuildEditorConfig.editorconfig
+E:\C#\Inventor\inventor-view-to-dxf\DXFExport\obj\Debug\net8.0\DXFExport.AssemblyInfoInputs.cache
+E:\C#\Inventor\inventor-view-to-dxf\DXFExport\obj\Debug\net8.0\DXFExport.AssemblyInfo.cs
+E:\C#\Inventor\inventor-view-to-dxf\DXFExport\obj\Debug\net8.0\DXFExport.csproj.CoreCompileInputs.cache
+E:\C#\Inventor\inventor-view-to-dxf\DXFExport\obj\Debug\net8.0\DXFExport.sourcelink.json

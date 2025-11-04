@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Inventor (External)": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Program Files\\Autodesk\\Inventor 2025\\Bin\\Inventor.exe",
+      "commandLineArgs": "",
+      "workingDirectory": "C:\\Program Files\\Autodesk\\Inventor 2025\\Bin"
+    }
+  }
+}

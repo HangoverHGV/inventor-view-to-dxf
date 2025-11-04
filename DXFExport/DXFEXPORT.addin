@@ -1,0 +1,8 @@
+<?xml version="1.0" standalone="yes"?>
+<Addin Type="Standard">
+    <ClassId>{45B07B4F-300D-47C2-9844-48601C2E608A}</ClassId> 
+    <ClientId>{45B07B4F-300D-47C2-9844-48601C2E608A5}</ClientId> 
+    <DisplayName>DXF Export Utility</DisplayName>
+    <Assembly>DXFExport.dll</Assembly> 
+    <LoadOnStartUp>1</LoadOnStartUp>
+</Addin>

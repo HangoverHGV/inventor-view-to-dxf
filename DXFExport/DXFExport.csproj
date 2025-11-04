@@ -1,9 +1,45 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <PlatformTarget>x64</PlatformTarget>
+	<UseWindowsForms>true</UseWindowsForms>
+	<UseWPF>true</UseWPF>
+	<EnableComHosting>true</EnableComHosting>
+	<EnableAot>true</EnableAot>
+	<PlatformTarget>x64</PlatformTarget>
+	  <ImplicitUsings>enable</ImplicitUsings>
+	  <Nullable>enable</Nullable>
+	  <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Autodesk.Inventor.Interop">
+      <HintPath>C:\Program Files\Autodesk\Inventor 2025\Bin\Public Assemblies\Autodesk.Inventor.Interop.dll</HintPath>
+		<Private>False</Private>
+		<EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="REM ----------------------------------------------------------------------------------&#xD;&#xA;REM 1. Create the target directory if it doesn't exist&#xD;&#xA;REM ----------------------------------------------------------------------------------&#xD;&#xA;MKDIR &quot;C:\ProgramData\Autodesk\Inventor 2025\Addins\DXFExport&quot;&#xD;&#xA;&#xD;&#xA;REM ----------------------------------------------------------------------------------&#xD;&#xA;REM 2. Copy the compiled DLL using Visual Studio macros&#xD;&#xA;REM    $(TargetDir) is the path to the bin\Debug\net8.0-windows\ folder&#xD;&#xA;REM    $(TargetFileName) is DXFExport.dll&#xD;&#xA;REM ----------------------------------------------------------------------------------&#xD;&#xA;XCOPY &quot;$(TargetDir)$(TargetFileName)&quot; &quot;C:\ProgramData\Autodesk\Inventor 2025\Addins\DXFExport\&quot; /Y /R&#xD;&#xA;&#xD;&#xA;REM ----------------------------------------------------------------------------------&#xD;&#xA;REM 3. Copy the .addin file using the Project Directory macro&#xD;&#xA;REM    $(ProjectDir) is the path to your main project folder (E:\C#\Inventor\...)&#xD;&#xA;REM ----------------------------------------------------------------------------------&#xD;&#xA;XCOPY &quot;$(ProjectDir)DXFExport.addin&quot; &quot;C:\ProgramData\Autodesk\Inventor 2025\Addins\DXFExport\&quot; /Y /R" />
+  </Target>
 
 </Project>
